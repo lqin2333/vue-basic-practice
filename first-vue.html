@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+  
+
+</head>
+
+<body>
+  
+  <div id="myApp">
+	<div v-if="show">{{message}}</div>
+	<div v-if="!show">No Message</div>
+	<!--<div v-for="item in games">{{item.title}}</div>-->
+	
+	
+	<br>
+	this game name is: {{gameName}}
+	<input v-model="gameName" />
+	<br>
+	{{cloneGameName}}
+	<br>
+	<button @click="clickYo(9998)">Yo button</button>
+	<br>
+	
+	
+	
+	
+	<game-item v-bind:key='item.id' v-for="item in games" v-bind:game="item">
+	
+	</game-item>
+	
+	{{numberO | addOne }}
+	
+	{{newNumberO}}
+	
+  </div>
+  
+  
+  <script>
+  
+  
+  Vue.component("game-item",{
+	props:["game"],
+	template: "<li>{{game.title}}</li>",
+  });
+  
+  var myApp = new Vue({
+  
+	el: "#myApp",
+	data:{
+		show: false,
+		message: "wtf",
+		gameName: "init game name",
+		cloneGameName: "s",
+		numberO: 10,
+		games:[
+			{id:1, title: "test title 1"},
+			{id:2, title: "test title 2"},
+			{id:3, title: "test title 3"},
+			{id:4, title: "test title 4"},
+		
+		]
+	},
+	filters:{
+		addOne: (v)=>{
+			return this.numberO = v + 3;
+		},
+	},
+	watch:{
+		numberO: function(newV, oldV){
+			console.log(newV, oldV);
+			this.cloneGameName = "hello world";
+		}
+	
+	},
+	methods:{
+		clickYo: function(value){
+			this.newNumberO = value;
+		}
+	
+	},
+	computed:{
+		newNumberO: {
+			get: function(){return 1234567},
+			set: function(value){ this.numberO = 878787 },
+		},
+	
+	},
+	
+	
+  
+  });
+  
+
+  
+  </script>
+  
+  
+  
+</body>
+</html>
