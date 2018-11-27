@@ -1,13 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-
-  <title>The HTML5 Herald</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
+	<meta charset="utf-8">
+	<title>VueJS</title>
+	<meta name="description" content="The HTML5 Herald">
+	<meta name="author" content="SitePoint">
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-
+	<link href="./style.css" rel="stylesheet">
   
 
 </head>
@@ -17,7 +16,7 @@
   <div id="myApp">
 	<div v-if="show">{{message}}</div>
 	<div v-if="!show">No Message</div>
-	<!--<div v-for="item in games">{{item.title}}</div>-->
+	<div v-for="(item, index) in games">({{index}}){{item.title}}</div>
 	
 	
 	<br>
@@ -40,6 +39,29 @@
 	
 	{{newNumberO}}
 	
+	
+	
+	<!-- class bind -->
+	<div v-bind:class="{active:isActive}"> red 1</div>
+	<div :class="{active:isActive}"> red 2</div>
+	<button @click="changeClass">Change class</button>
+	
+	<div :class="myStyleClasses">Big Red</div>
+	<button @click="changeBigRedClass">Change Big Red class</button>
+	
+	
+	<!-- if statement -->
+	<!-- still virtual DOM -->
+	<div v-if="mark >= 60 && mark <= 80"> Good </div>
+	<div v-else-if="mark < 60"> bad</div>
+	<div v-else-if="mark > 80"> Very good</div>
+	{{mark}}
+	<button @click="getMark">Get mark</button>
+	
+	<!-- v-show -->
+	<div v-show="isShowing"> Showing </div>
+	<button @click="showIt">Just Show</button>
+	
   </div>
   
   
@@ -60,17 +82,26 @@
 		gameName: "init game name",
 		cloneGameName: "s",
 		numberO: 10,
+		isActive: true,
 		games:[
 			{id:1, title: "test title 1"},
 			{id:2, title: "test title 2"},
 			{id:3, title: "test title 3"},
 			{id:4, title: "test title 4"},
 		
-		]
+		],
+		myStyleClasses: {
+			active: true,
+			big: true,
+			high: true,
+		},
+		mark : 0,
+		isShowing: true,
+		
 	},
 	filters:{
-		addOne: (v)=>{
-			return this.numberO = v + 3;
+		addOne: function(v){
+			return this.numberO = v + 7;
 		},
 	},
 	watch:{
@@ -83,13 +114,28 @@
 	methods:{
 		clickYo: function(value){
 			this.newNumberO = value;
+		},
+		
+		changeClass: function(){
+			this.isActive = !this.isActive;
+		},
+		
+		changeBigRedClass: function(){
+			this.myStyleClasses.big = !this.myStyleClasses.big;
+		},
+		getMark: function(){
+			this.mark = Math.floor(Math.random() *100);
+		
+		},
+		showIt: function(){
+			this.isShowing = !this.isShowing;
+		
 		}
-	
 	},
 	computed:{
 		newNumberO: {
 			get: function(){return 1234567},
-			set: function(value){ this.numberO = 878787 },
+			set: function(value){ this.gameName = "newNumberO updated" },
 		},
 	
 	},

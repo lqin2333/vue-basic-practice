@@ -1,0 +1,17 @@
+body{
+	
+	font-size:30px;
+	
+}
+
+.active{
+	color:red;
+}
+
+.big{
+	font-size: 60px;
+}
+
+.high{
+	height: 75px;
+}
