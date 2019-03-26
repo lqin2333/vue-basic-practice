@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <link href="./style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <div id="app">
+
+        <button @click="lang">start</button>
+        <input type="button" value="stop" @click="stop">
+
+        {{msg}}
+        <hr>
+        {{bind_msg}}
+        <br>
+        <input type="text" v-model="bind_msg">
+        <!-- v-model只能放在表单元素里， 表单元素有 input select checkbox textare... -->
+        <hr>
+
+        <!-- calculator -->
+
+        <input type="text" v-model="n1">
+        <select name="" v-model="opt">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">×</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" v-model="n2">
+        <input type="button" value="=" @click="calc">
+        <input type="text" id="calc-result" v-model="result">
+    </div>
+
+
+    <script>
+
+        var vm = new Vue({
+
+            el: '#app',
+            data: {
+                msg: '猥琐发育，别浪！！！！',
+                interval: null,
+                bind_msg: 'what does fox say',
+                opt: '+',
+                n1: 0,
+                n2: 0,
+                result: 0,
+            },
+            methods: {
+                lang() {
+
+                    if (this.interval != null)
+                        return;
+                    // console.log('abc');
+                    this.interval = setInterval(() => {
+                        var start = this.msg.substring(0, 1);
+                        var end = this.msg.substring(1);
+                        this.msg = end + start;
+                    }, 400)
+
+
+
+                },
+                stop() {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                },
+                calc() {
+                    // 可以用switch判定opt
+                    // 也可以这样：但是不要经常用
+                    var str = 'parseInt(this.n1)' + this.opt + 'parseInt(this.n2)';
+                    this.result = eval(str); // 字符串解析执行 然后拿到结果
+                }
+
+            }
+
+
+        })
+
+
+    </script>
+
+</body>
+
+</html>
